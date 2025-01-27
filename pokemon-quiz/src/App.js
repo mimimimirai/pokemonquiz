@@ -18,9 +18,37 @@ function App() {
         setPokemon(response.data);
     };
 
+    const normalizeInput = (input) => {
+        // ひらがなやカタカナをローマ字に変換する処理を追加
+        const romajiMap = {
+            'ピカチュウ': 'pikachu',
+            'リザードン': 'charizard',
+            'フシギダネ': 'bulbasaur',
+            'ゼニガメ': 'squirtle',
+            'イシツブテ': 'geodude',
+            'ミュウツー': 'mewtwo',
+            'ミュウ': 'mew',
+            'サンダース': 'jolteon',
+            'シャワーズ': 'vaporeon',
+            'ブースター': 'flareon',
+            'カビゴン': 'snorlax',
+            'ゴースト': 'gastly',
+            'ルギア': 'lugia',
+            'ホウオウ': 'ho-oh',
+            'アチャモ': 'torchic',
+            'リオル': 'riolu',
+            'メルタン': 'melton',
+            'メルメタル': 'melmetal',
+            'ゼラオラ': 'zeraora',
+            'ドダイトス': 'torterra',
+        };
+        return romajiMap[input] || input.toLowerCase(); // マップにない場合はそのまま小文字に
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (userInput.toLowerCase() === pokemon.name.toLowerCase()) {
+        const normalizedInput = normalizeInput(userInput);
+        if (normalizedInput === pokemon.name.toLowerCase()) {
             setScore(score + 1);
             setMessage('正解！');
         } else {
